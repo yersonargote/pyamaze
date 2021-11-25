@@ -6,6 +6,7 @@ def heuristic(x: list, y: list):
     # Manhattan distance
     return abs(x[0] - y[0]) + abs(x[1] - y[1])
 
+
 def a_star(m: maze, start: list, goal: list):
     """
     A* algorithm for finding a path from start to goal in a maze using the Manhattan distance heuristic function.
