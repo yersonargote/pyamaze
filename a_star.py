@@ -1,6 +1,5 @@
 from queue import PriorityQueue
 from pyamaze import maze
-from utils import DIRECTIONS
 
 
 def heuristic(x: list, y: list):
@@ -11,12 +10,11 @@ def a_star(m: maze, start: list, goal: list):
     """
     A* algorithm for finding a path from start to goal in a maze using the Manhattan distance heuristic function.
     """
-
-    # Evalue if start and goal are in the maze.
+    # Check if start and goal are in the maze.
     if not m.isInMaze(start[0], start[1]) or not m.isInMaze(goal[0], goal[1]):
         return None, None, None
     
-    # Evalue if start and goal is None.
+    # Check if start and goal is None.
     if start == None or goal == None:
         return None, None, None
     
