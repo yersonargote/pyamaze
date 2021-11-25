@@ -27,6 +27,8 @@ from tkinter import *
 from enum import Enum
 from collections import deque
 
+DIRECTIONS = {'N': (-1, 0), 'E': (0, 1), 'S': (1, 0), 'W': (0, -1)}
+
 class COLOR(Enum):
     '''
     This class is created to use the Tkinter colors easily.
@@ -366,6 +368,7 @@ class maze:
                 self.theme=COLOR[theme]
             else:
                 raise ValueError(f'{theme} is not a valid theme COLOR!')
+
         def blockedNeighbours(cell):
             n=[]
             for d in self.maze_map[cell].keys():
@@ -379,6 +382,7 @@ class maze:
                     elif d=='S' and (cell[0]+1,cell[1]) in self.grid:
                         n.append((cell[0]+1,cell[1]))
             return n
+
         def removeWallinBetween(cell1,cell2):
             '''
             To remove wall in between two cells
@@ -397,6 +401,7 @@ class maze:
                 else:
                     self.maze_map[cell1]['S']=1
                     self.maze_map[cell2]['N']=1
+
         def isCyclic(cell1,cell2):
             '''
             To avoid too much blank(clear) path.
@@ -419,6 +424,7 @@ class maze:
                     if (cell1[0],cell1[1]-1) in self.grid and self.maze_map[(cell1[0],cell1[1]-1)]['S']==1:
                         ans= True
             return ans
+
         def BFS(cell):
             '''
             Breadth First Search
@@ -887,6 +893,25 @@ class maze:
             for a,p in d.items():
                 if a.goal!=(a.x,a.y) and len(p)!=0:
                     self._tracePathSingle(a,p,kill,showMarked,delay)
+    
+    def isInMaze(self,x,y):
+        '''
+        A method to check if a point is in the maze
+        '''
+        return (x>0 and x<=self.rows and y>0 and y<=self.cols)
+    
+
+    def getNeighbors(self,x,y):
+        '''
+        A method to get the neighbors of a point
+        '''
+        neighbors = []
+        global DIRECTIONS
+        for direction, value in DIRECTIONS.items():
+            if self.maze_map[(x, y)][direction] == True:
+                neighbors.append((x + value[0], y + value[1]))
+        return neighbors
+    
     def run(self):
         '''
         Finally to run the Tkinter Main Loop
