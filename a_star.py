@@ -1,5 +1,5 @@
-from queue import PriorityQueue
 from pyamaze import maze
+from node import PriorityQueue, Node
 
 
 def heuristic(x: list, y: list):
@@ -22,7 +22,7 @@ def a_star(m: maze, start: list, goal: list):
     # Create a priority queue for the open list.
     frontier = PriorityQueue()
     # Initialize the frontier with the start node and its cost.
-    frontier.put((heuristic(start, goal), heuristic(start, goal) , start))
+    frontier.push(Node(start, None, 0.0, heuristic(start, goal)))
 
     explored = {row: float('inf') for row in m.grid}
     explored[start] = 0
@@ -30,8 +30,8 @@ def a_star(m: maze, start: list, goal: list):
     path = {}
     search_path = [start]
 
-    while not frontier.empty():
-        current = frontier.get()[2]
+    while not frontier.empty:
+        current = frontier.pop().state
         search_path.append(current)
         if current == goal:
             break
@@ -42,7 +42,7 @@ def a_star(m: maze, start: list, goal: list):
             if new_cost < explored[neighbor]:
                 explored[neighbor] = new_cost
                 priority = new_cost + heuristic(neighbor, goal)
-                frontier.put((priority, new_cost, neighbor))
+                frontier.push(Node(neighbor, current, new_cost, priority))
                 path[neighbor] = current
 
     forward_path = {}
