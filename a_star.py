@@ -46,7 +46,7 @@ def a_star(m: maze, start: list, goal: list):
                 path[neighbor] = current
 
     forward_path = {}
-    cell = m._goal
+    cell = goal
     while cell != start:
         forward_path[path[cell]] = cell
         cell = path[cell]

@@ -3,11 +3,14 @@ from a_star import a_star
 from bfs import BFS
 
 def main():
+
+    value: int = 8
+    
     # rows and columns of the maze
-    rows, cols= (10, 10)
+    rows, cols= (value, value)
 
     # Point of the agent in the maze
-    start = (10, 10)
+    start = (value, value)
 
     # Point of the goal in the maze
     goal = (1,1)
@@ -31,22 +34,22 @@ def main():
 
     # Create the agent that will be used to move the agent in the maze with the given path
     a = agent(m, footprints=True, color=COLOR.blue, filled=True)
-    # b = agent(m, goal[0], goal[1], footprints=True, color=COLOR.yellow, filled=True, goal=start)
+    b = agent(m, goal[0], goal[1], footprints=True, color=COLOR.yellow, filled=True, goal=start)
     c = agent(m, start[0], start[1], footprints=True, color=COLOR.red, goal=goal)
 
     # Create agent that will be used to move the agent in the maze with the given path
-    d = agent(m, shape='arrow', footprints=True, color=COLOR.yellow)
-    e = agent(m, start[0], start[1], shape='arrow',footprints=True, color=COLOR.green, goal=goal)
+    # d = agent(m, footprints=True, color=COLOR.yellow)
+    # e = agent(m, start[0], start[1], footprints=True, color=COLOR.green, goal=goal)
 
 
     # Move the agent in the maze with the given path 
     m.tracePath({a: search_path}, delay=200)
-    # m.tracePath({b: path}, delay=200)
+    m.tracePath({b: path}, delay=200)
     m.tracePath({c: forward_path}, delay=200)
 
     # Move the agent in the maze with the given path BFS
-    m.tracePath({d: bfs_search_path}, delay=200)
-    m.tracePath({e: forward_path}, delay=200)
+    # m.tracePath({d: bfs_search_path}, delay=200)
+    # m.tracePath({e: forward_path}, delay=200)
 
     # Show the maze
     m.run()
